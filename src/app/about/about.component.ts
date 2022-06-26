@@ -50,8 +50,10 @@ export class AboutComponent {
 
     onReadCollection() {
         this.db.collection(
-            "courses/26heTA9oaHMQ2TqLds2w/lessons",
-            ref => ref.where("seqNo", "<=", 5).orderBy("seqNo")
+            "courses",
+            ref => ref.where("seqNo", "<=", 20)
+            .where("url", "==", "angular-forms-course")
+            .orderBy("seqNo")
             ).get().subscribe(snaps => {
             snaps.forEach(snap => {
                 console.log(snap.id)
