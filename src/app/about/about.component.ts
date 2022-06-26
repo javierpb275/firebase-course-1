@@ -48,6 +48,18 @@ export class AboutComponent {
         });
     }
 
+    onReadCollection() {
+        this.db.collection(
+            "courses/26heTA9oaHMQ2TqLds2w/lessons",
+            ref => ref.where("seqNo", "<=", 5).orderBy("seqNo")
+            ).get().subscribe(snaps => {
+            snaps.forEach(snap => {
+                console.log(snap.id)
+                console.log(snap.data())
+            })
+        })
+    }
+
 
 }
 
