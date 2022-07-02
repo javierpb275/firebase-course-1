@@ -42,10 +42,9 @@ export class AboutComponent {
 
     onReadDoc() {
         this.db.doc("/courses/26heTA9oaHMQ2TqLds2w")
-        .snapshotChanges()
-        .subscribe(snap => {
-            console.log(snap.payload.id)
-            console.log(snap.payload.data())
+        .valueChanges()
+        .subscribe(course => {
+            console.log(course)
         });
     }
 
