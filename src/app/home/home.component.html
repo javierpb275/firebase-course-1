@@ -1,27 +1,21 @@
-
 <div class="courses-panel">
+  <div class="header">
+    <h2 class="title">All Courses</h2>
 
-    <div class="header">
+    <button mat-mini-fab color="accent">
+      <mat-icon class="add-course-btn">add</mat-icon>
+    </button>
+  </div>
 
-        <h2 class="title">All Courses</h2>
+  <mat-tab-group>
+    <mat-tab label="Beginners">
+      <courses-card-list
+        [courses]="beginnersCourses$ | async"
+      ></courses-card-list>
+    </mat-tab>
 
-        <button mat-mini-fab color="accent">
-            <mat-icon class="add-course-btn">add</mat-icon>
-        </button>
-
-    </div>
-
-    <mat-tab-group>
-
-        <mat-tab label="Beginners">
-
-        </mat-tab>
-
-        <mat-tab label="Advanced">
-
-        </mat-tab>
-
-    </mat-tab-group>
-
+    <mat-tab label="Advanced">
+      <courses-card-list [courses]="advancedCourses$ | async"></courses-card-list>
+    </mat-tab>
+  </mat-tab-group>
 </div>
-
