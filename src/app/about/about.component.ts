@@ -41,10 +41,11 @@ export class AboutComponent {
     }
 
     onReadDoc() {
-        this.db.doc("/courses/4b8wV7RbumATUtKKNKlc").get()
+        this.db.doc("/courses/26heTA9oaHMQ2TqLds2w")
+        .snapshotChanges()
         .subscribe(snap => {
-            console.log(snap.id)
-            console.log(snap.data())
+            console.log(snap.payload.id)
+            console.log(snap.payload.data())
         });
     }
 
