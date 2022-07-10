@@ -7,6 +7,11 @@ service cloud.firestore {
       return request.auth.uid != null;
     }
 
+    function isAdmin() {
+      return isAuthenticated() && 'admin' in request.auth.token &&
+      request.auth.token.admin == true;
+    }
+
     function isKnownUser() {
       return isAuthenticated() &&
       exists(/databases/$(database)/documents/users/$(request.auth.uid));
@@ -27,7 +32,8 @@ service cloud.firestore {
 
       allow read: if isKnownUser();
 
-      allow write: if isValidCourse() && isAuthenticated();
+      allow create, update: if isValidCourse() && isAdmin();
+      allow delete: if isAdmin();
 
       match /lessons/{lessonId} {
         allow read: if isKnownUser();
