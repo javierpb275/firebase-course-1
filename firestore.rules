@@ -7,9 +7,22 @@ service cloud.firestore {
       return request.auth.uid != null;
     }
 
+    function isNonEmptyString(fieldName) {
+      return request.resource.data[fieldName] is string &&
+      request.resource.data[fieldName].size() > 0;
+    }
+
+    function isValidCourse() {
+      return request.resource.data.seqNo is number &&
+      request.resource.data.seqNo >= 0 &&
+      isNonEmptyString("url");
+    }
+
     match /courses/{courseId} {
 
       allow read: if isAuthenticated();
+
+      allow write: if isValidCourse() && isAuthenticated();
 
       match /lessons/{lessonId} {
         allow read: if isAuthenticated();
