@@ -6,6 +6,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import { CoursesService } from '../services/courses.service';
+import { UserService } from '../services/user.service';
 
 @Component({
     selector: 'courses-card-list',
@@ -26,7 +27,8 @@ export class CoursesCardListComponent implements OnInit {
     constructor(
       private dialog: MatDialog,
       private router: Router,
-      private coursesServices: CoursesService) {
+      private coursesService: CoursesService,
+      public userService: UserService) {
     }
 
     ngOnInit() {
@@ -54,7 +56,7 @@ export class CoursesCardListComponent implements OnInit {
     }
 
     onDeleteCourse(course:Course) {
-        this.coursesServices.deleteCourseAndLessons(course.id)
+        this.coursesService.deleteCourseAndLessons(course.id)
         .pipe(
             tap(() => {
                console.log("Deleted course", course);
