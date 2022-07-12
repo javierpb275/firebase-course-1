@@ -41,8 +41,11 @@ export class CreateCourseComponent implements OnInit {
 
   uploadThumbnail(event) {
     const file: File = event.target.files[0];
-    console.log(file.name)
-
+    const filePath = `courses/${this.courseId}/${file.name}`;
+    const task = this.storage.upload(filePath, file, {
+      cacheControl: "max-age=2592000,public",
+    });
+    task.snapshotChanges().subscribe();
   }
 
   onCreateCourse() {
@@ -53,7 +56,7 @@ export class CreateCourseComponent implements OnInit {
       longDescription: val.longDescription,
       promo: val.promo,
       categories: [val.category],
-    }
+    };
     newCourse.promoStartAt = Timestamp.fromDate(this.form.value.promoStartAt);
     this.coursesService
       .createCourse(newCourse, this.courseId)
@@ -62,10 +65,10 @@ export class CreateCourseComponent implements OnInit {
           console.log("Created new course: ", course);
           this.router.navigateByUrl("/courses");
         }),
-        catchError(err => {
-          console.log(err)
+        catchError((err) => {
+          console.log(err);
           alert("Could not create the course");
-          return throwError(err)
+          return throwError(err);
         })
       )
       .subscribe();
