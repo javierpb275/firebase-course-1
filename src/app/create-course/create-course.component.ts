@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 import firebase from "firebase/app";
 import Timestamp = firebase.firestore.Timestamp;
 import { CoursesService } from "../services/courses.service";
+import { AngularFireStorage } from "@angular/fire/storage";
 
 @Component({
   selector: "create-course",
@@ -30,11 +31,18 @@ export class CreateCourseComponent implements OnInit {
     private fb: FormBuilder,
     private coursesService: CoursesService,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private storage: AngularFireStorage
   ) {}
 
   ngOnInit() {
     this.courseId = this.afs.createId();
+  }
+
+  uploadThumbnail(event) {
+    const file: File = event.target.files[0];
+    console.log(file.name)
+
   }
 
   onCreateCourse() {
