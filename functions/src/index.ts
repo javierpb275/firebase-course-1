@@ -10,7 +10,7 @@ export const onAddCourseUpdatePromoCounter = functions
   })
   .firestore.document("courses/{courseId}")
   .onCreate(async (snap, context) => {
-    functions.logger.debug(
-      `Running add course trigger for courseId ${context.params.courseId}`
-    );
+    await (
+      await import("./promotions-counter/on-add-course")
+    ).default(snap, context);
   });
