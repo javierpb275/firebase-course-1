@@ -14,3 +14,11 @@ export const onAddCourseUpdatePromoCounter = functions
       await import("./promotions-counter/on-add-course")
     ).default(snap, context);
   });
+
+export const onCourseUpdatedUpdatePromoCounter = functions.firestore
+  .document("courses/{courseId}")
+  .onUpdate(async (change, context) => {
+    await (
+      await import("./promotions-counter/on-course-updated")
+    ).default(change, context);
+  });
